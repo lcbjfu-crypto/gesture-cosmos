@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#02030a" />
+  <title>宇宙行星粒子 · 手势交互</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="universe">
+    <canvas id="sceneCanvas" aria-label="宇宙行星粒子交互场景"></canvas>
+
+    <section class="title-block">
+      <p class="kicker"><span></span>GESTURE COSMOS / 2026</p>
+      <h1>触碰<br><em>宇宙</em></h1>
+      <p class="lead">中心太阳系 · 轨道行星 · 远端星系</p>
+    </section>
+
+    <section class="diagnostics" aria-label="最小版本验证面板">
+      <div class="diagnostic-title"><span class="live-dot"></span>实时验证台</div>
+      <div class="checks">
+        <div data-check="camera"><b>01</b><span>摄像头画面</span><i>等待</i></div>
+        <div data-check="skeleton"><b>02</b><span>手部骨架</span><i>等待</i></div>
+        <div data-check="gesture"><b>03</b><span>手势识别</span><i>等待</i></div>
+        <div data-check="particles"><b>04</b><span>粒子响应</span><i>就绪</i></div>
+      </div>
+      <p id="systemStatus">粒子宇宙已就绪，等待启动摄像头</p>
+    </section>
+
+    <section id="cameraPanel" class="camera-panel" aria-label="摄像头与手部骨架预览">
+      <div class="camera-head"><span>HAND VISION / LIVE</span><strong id="fpsLabel">0 FPS</strong></div>
+      <div class="camera-view" aria-hidden="true">
+        <video id="cameraFeed" autoplay playsinline muted></video>
+        <canvas id="handCanvas"></canvas>
+        <div class="reticle"></div>
+      </div>
+      <div class="gesture-readout">
+        <small>当前手势</small>
+        <strong id="gestureLabel">等待启动</strong>
+        <output id="trackingStats">MediaPipe 未连接</output>
+      </div>
+    </section>
+
+    <button id="cameraButton" class="camera-button" type="button" data-testid="camera-toggle">
+      <span></span><b id="cameraLabel">启动摄像头手势识别</b>
+    </button>
+
+    <section id="photoMenu" class="photo-menu" aria-label="图片上传菜单">
+      <div class="photo-menu-head">
+        <div>
+          <span class="menu-kicker">PHOTO SOURCE / SETUP</span>
+          <h2>图片素材</h2>
+        </div>
+        <button id="hidePhotoMenu" class="menu-icon-button" type="button" aria-label="隐藏图片菜单">×</button>
+      </div>
+      <p class="photo-menu-help">上传图片后，左手捏合切换；张开打开，握拳关闭。</p>
+      <label class="upload-drop" for="photoUpload">
+        <input id="photoUpload" type="file" accept="image/*" multiple />
+        <span class="upload-plus">＋</span>
+        <span><b>选择宇宙图片</b><small>支持 JPG / PNG / WEBP，可多选</small></span>
+      </label>
+      <div id="photoThumbs" class="photo-thumbs" aria-live="polite">
+        <span class="photo-empty">尚未上传自定义图片，将使用默认星云图</span>
+      </div>
+      <div class="photo-menu-actions">
+        <button id="runModeButton" class="run-mode-button" type="button">进入正式运行</button>
+        <button id="clearPhotosButton" class="clear-photos-button" type="button">清空自定义图</button>
+      </div>
+    </section>
+    <button id="showPhotoMenu" class="photo-menu-reopen" type="button">图片菜单</button>
+
+    <aside class="legend">
+      <div><span class="hand open">✋</span><b>右手张开</b><small>星系展开</small></div>
+      <div><span class="hand fist">✊</span><b>右手握拳</b><small>聚合 · 远近缩放</small></div>
+      <div><span class="hand pinch">◎</span><b>左手捏合</b><small>切换大图</small></div>
+      <div><span class="hand move">↔</span><b>右手移动</b><small>带动星云</small></div>
+      <div><span class="hand open">✋</span><b>左手张开</b><small>打开大图</small></div>
+      <div><span class="hand fist">✊</span><b>左手握拳</b><small>关闭大图</small></div>
+    </aside>
+
+    <section id="photoStage" class="photo-stage" aria-live="polite">
+      <div class="photo-frame">
+        <img id="photoImage" alt="上传的宇宙图片" />
+        <span id="photoIndex">01 / 04</span>
+        <h2 id="photoTitle">NEBULA MEMORY</h2>
+        <p id="photoCaption">左手捏合切换宇宙大图</p>
+      </div>
+    </section>
+
+    <div class="grid" aria-hidden="true"></div>
+    <div class="noise" aria-hidden="true"></div>
+  </main>
+  <script src="app.js?v=23"></script>
+  <script src="gesture.js?v=23"></script>
+</body>
+</html>
