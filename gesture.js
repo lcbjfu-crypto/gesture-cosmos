@@ -44,8 +44,8 @@
   }
   async function loadEngine() {
     if (window.Hands && window.Camera) return;
-    loadingPromise ||= loadScript("https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js")
-      .then(() => loadScript("https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"));
+    loadingPromise ||= loadScript("vendor/camera_utils.js")
+      .then(() => loadScript("vendor/hands/hands.js"));
     await loadingPromise;
     if (!window.Hands || !window.Camera) throw new Error("MediaPipe Hands 未能初始化");
   }
@@ -162,7 +162,7 @@
     button.disabled = true; cameraLabel.textContent = "正在连接摄像头…"; gestureLabel.textContent = "加载识别模型"; stats.textContent = "首次加载需要联网"; status.textContent = "正在启动真实摄像头与手势模型";
     try {
       await loadEngine();
-      hands = new window.Hands({ locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}` });
+      hands = new window.Hands({ locateFile: file => `vendor/hands/${file}` });
       hands.setOptions({ maxNumHands: 2, modelComplexity: 1, minDetectionConfidence: .55, minTrackingConfidence: .55 }); hands.onResults(results);
       camera = new window.Camera(video,{ width:640,height:480,onFrame:async()=>{
         if (!running || video.readyState < 2 || !video.videoWidth || !video.videoHeight) return;
